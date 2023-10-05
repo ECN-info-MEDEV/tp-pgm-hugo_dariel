@@ -1,0 +1,26 @@
+Code:
+
+  Inforeg 2.0:
+  - François MARIE
+  - Rémi RAVELLI
+
+  Inforeg 1.0:
+  - Béryl CASSEL
+  - Cristobal CARRASCO DE RODT
+  - Jorge QUISPE
+  - Isaías VENEGAS
+  - Samy AMAL
+
+
+Icons:
+
+- "Color", "label", "select", "move"
+  icons from Remix Icon under Apache2 license
+  https://github.com/Remix-Design/remixicon
+
+- "Fit to screen"
+   icon by harits prabowo
+   https://freeicons.io/profile/9037
+   Free commercial use license
+
+
