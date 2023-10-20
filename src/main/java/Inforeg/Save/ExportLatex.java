@@ -6,8 +6,13 @@ import Inforeg.ObjetGraph.Arc;
 import Inforeg.ObjetGraph.Nail;
 import Inforeg.ObjetGraph.Node;
 import java.awt.Color;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JFileChooser;
 
 /**
  * Export en format LaTeX
@@ -26,11 +31,14 @@ public class ExportLatex {
     private int arcSize;
     private boolean adaptNodeSize;
     private boolean showNails;
+    
+    static String codeExportation;
 
     public ExportLatex() {
         id = 0;
         nodeSize = 0;
         arcSize = 0;
+        codeExportation = "";
         nodeID = new HashMap<Node, Integer>();
         nailID = new HashMap<Nail, Integer>();
         adaptNodeSize = false;
@@ -39,7 +47,12 @@ public class ExportLatex {
 
     public String export(Draw d, Color nodeColor, Color arcColor, int nodeSize, int arcSize, boolean adaptNodeSize, boolean showNails) {
         Graph G = d.getG();
-        String res = "\\resizebox{15cm}{!}{\n\\begin{tikzpicture}[scale=0.05]\n";
+        
+        String res = "\\documentclass{article}\n" +
+                     "\\usepackage{tikz} % Pacote TikZ\n" +
+                     "\\usepackage{graphicx} % Para usar \\resizebox\n" +
+                     "\\usepackage{xcolor}\n" +
+                     "\\resizebox{15cm}{!}{\n\\begin{tikzpicture}[scale=0.05]\n";
         this.arcSize = arcSize;
         this.nodeSize = nodeSize;
         this.adaptNodeSize = adaptNodeSize;
@@ -89,6 +102,7 @@ public class ExportLatex {
         }
         res += arcs;
         res += "\\end{tikzpicture}\n}";
+        codeExportation = res;
         return res;
     }
 
@@ -131,5 +145,33 @@ public class ExportLatex {
     private String colotTikz(Color c) {
         return ("{rgb,255:red," + String.valueOf(c.getRed()) + ";green," + String.valueOf(c.getGreen()) + ";blue," + String.valueOf(c.getBlue()) + "}");
     }
+    
+    public static void enregistrerLatex(){
+        JFileChooser fileExplorer = new JFileChooser();
+        fileExplorer.setApproveButtonText("Enregistrer");
+        int res = fileExplorer.showOpenDialog(null);
+        
+        
+        if(res == JFileChooser.APPROVE_OPTION){
+            try{
+                File file = fileExplorer.getSelectedFile();
+                String[] filePath = Utils.formatPath(file, "tex");
+                File formatFile = new File(filePath[1]);
+
+                BufferedWriter writer = new BufferedWriter(new FileWriter(formatFile));
+                writer.write(codeExportation);
+                writer.close();
+            
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+        
+        
+    
+    
+    
 
 }

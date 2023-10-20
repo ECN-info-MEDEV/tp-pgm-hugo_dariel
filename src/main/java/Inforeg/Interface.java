@@ -403,6 +403,7 @@ public class Interface {
         toolBarButtons.add(spinnerTailleLabel);
         toolBarButtons.add(spinnerTaille);
         spinnerTaille.setAlignmentX(JSpinner.LEFT_ALIGNMENT);
+        
         //ajoute un séparateur de taille par défaut
         toolBarButtons.addSeparator();
 
@@ -415,6 +416,7 @@ public class Interface {
             epaisseur = i;
             d.epaisseurLines();
         };
+        
         spinnerEpaisseur.addChangeListener(strokeListener);
         spinnerEpaisseur.setMaximumSize(spinnerEpaisseur.getPreferredSize());
         JLabel spinnerEpaisseurLabel = new JLabel(" Epaisseur Arcs");
@@ -423,6 +425,7 @@ public class Interface {
         toolBarButtons.add(spinnerEpaisseurLabel);
         toolBarButtons.add(spinnerEpaisseur);
         spinnerEpaisseur.setAlignmentX(JSpinner.LEFT_ALIGNMENT);
+        
         //ajoute un séparateur de taille par défaut
         toolBarButtons.addSeparator();
 
@@ -475,6 +478,7 @@ public class Interface {
         JLabel l1 = new JLabel("  Ajouter :");
         toolBarButtons.add(l1);
         toolBarButtons.addSeparator();
+        
         // Node Button
         CustomButton nodeButton = new CustomButton("Noeud", nodeIco, null, TOOL_BUTTON_FOCUS_COLOR, TOOL_BUTTON_SELECTED_COLOR);
         nodeButton.setFocusPainted(false);
@@ -486,6 +490,7 @@ public class Interface {
         });
         toolBarButtons.add(nodeButton);
         nodeButton.setMaximumSize(buttonSize);
+        
         // Arc Button
         CustomButton arcButton = new CustomButton("Arc", arcIco, null, TOOL_BUTTON_FOCUS_COLOR, TOOL_BUTTON_SELECTED_COLOR);
         arcButton.setFocusPainted(false);

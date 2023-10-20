@@ -27,6 +27,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -264,14 +266,14 @@ public class LatexWindow extends JDialog {
         wrapperArea.add(exportScrollPane);
         export.add(wrapperArea);
 
-        CustomButton exportButton = new CustomButton("Exporter", AlgoBox.BUTTON_COLOR, AlgoBox.BUTTON_COLOR, null);
-        exportButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                ExportLatex exportLatex = new ExportLatex();
-                setExport(exportLatex.export(d, nColor, aColor, nSize, aSize, adaptSize.isSelected(), showNails.isSelected()));
-            }
-        });
+//        CustomButton exportButton = new CustomButton("Exporter", AlgoBox.BUTTON_COLOR, AlgoBox.BUTTON_COLOR, null);
+//        exportButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent ae) {
+//                ExportLatex exportLatex = new ExportLatex();
+//                setExport(exportLatex.export(d, nColor, aColor, nSize, aSize, adaptSize.isSelected(), showNails.isSelected()));
+//            }
+//        });
         copyButton = new CustomButton("Copier", AssetLoader.copyIco, AlgoBox.BUTTON_COLOR, AlgoBox.BUTTON_COLOR, Color.decode("#94bc63"));
         copyButton.addActionListener(new ActionListener() {
             @Override
@@ -282,11 +284,39 @@ public class LatexWindow extends JDialog {
                 Inforeg.Save.Utils.copyToClipboard(exportArea.getText());
             }
         });
-        exportButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+
+        
+        //     
+        CustomButton saveButton = new CustomButton("Enregistrer", AlgoBox.BUTTON_COLOR, AlgoBox.BUTTON_COLOR, null);           
+        
+        saveButton.addActionListener(new ActionListener()  {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                ExportLatex.enregistrerLatex();
+            }
+        });
+        
+        tabs.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                // Verifique se a guia "Export" está selecionada
+                if (tabs.getSelectedIndex() == 1) { // A segunda guia tem índice 1
+                    ExportLatex exportLatex = new ExportLatex();
+                    setExport(exportLatex.export(d, nColor, aColor, nSize, aSize, adaptSize.isSelected(), showNails.isSelected()));
+                }
+            }
+       });
+            
+            
+            
+// -----------------------------        MODIFICANDO ------------------------- //
+//        exportButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         JPanel buttonsContainer = new JPanel();
         
-        buttonsContainer.add(exportButton);
+//        buttonsContainer.add(exportButton);
         buttonsContainer.add(copyButton);
+        buttonsContainer.add(saveButton);
         
         export.add(buttonsContainer);
 
