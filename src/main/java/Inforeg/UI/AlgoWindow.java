@@ -35,13 +35,19 @@ public class AlgoWindow extends JDialog {
 
         AlgoBox path = new AlgoBox("Plus court chemin", this, pathIco);
         path.addAlgo(new Dijkstra());
+        path.addAlgo(new Bellmanford());
+        path.addAlgo(new FloydWarshall());
+        
+        
 
         AlgoBox flow = new AlgoBox("Flot", this, flowIco);
         flow.addAlgo(new FordFulkerson());
+        flow.addAlgo(new Dinic());
 
         AlgoBox tree = new AlgoBox("Arbre", this, treeIco);
         tree.addAlgo(new PrimMST());
         tree.addAlgo(new KruskalMST());
+        tree.addAlgo(new Edmonds());
 
         AlgoBox coloration = new AlgoBox("Coloration", this, colorationIco);
         coloration.addAlgo(new Coloration());
