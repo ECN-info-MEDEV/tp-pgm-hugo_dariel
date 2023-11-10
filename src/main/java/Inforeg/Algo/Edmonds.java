@@ -10,7 +10,7 @@ public class Edmonds extends Algorithm {
 
     public Edmonds() {
         super();
-        this.setName("Appariement Maximum d'Edmonds");
+        this.setName("Edmonds");
     }
 
     @Override

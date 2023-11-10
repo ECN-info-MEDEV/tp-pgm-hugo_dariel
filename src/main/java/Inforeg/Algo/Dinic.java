@@ -9,7 +9,7 @@ public class Dinic extends Algorithm implements AlgorithmST, Processing {
 
     public Dinic() {
         super();
-        this.setName("Dinic Max Flow");
+        this.setName("Dinic");
     }
 
     @Override
@@ -28,9 +28,9 @@ public class Dinic extends Algorithm implements AlgorithmST, Processing {
         maxFlow = dinicMaxFlow(graph, src, dest);
 
         if (maxFlow >= 0) {
-            d.setResultat("Flux Máximo: " + maxFlow);
+            d.setResultat("Flux Maximal: " + maxFlow);
         } else {
-            d.setResultat("Não existe um fluxo válido entre os vértices " +
+            d.setResultat("Il n'existe pas un flux valide entre les sommets " +
                     d.getNodes().get(src).getLabel() + " et " + d.getNodes().get(dest).getLabel() + ".");
         }
     }
