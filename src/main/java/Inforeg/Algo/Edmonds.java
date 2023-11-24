@@ -1,7 +1,9 @@
+
 package Inforeg.Algo;
 
 import Inforeg.Draw.Draw;
 import Inforeg.Graph.Graph;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,10 +29,13 @@ public class Edmonds extends Algorithm {
         // Parcours de tous les sommets non appariés
         for (int u = 0; u < V; u++) {
             if (!matched[u]) {
-                int match = findAugmentingPath(g, u, parent, matched);
+                int match = findAugmentingPath(g, u, parent, matched, d);
                 if (match != -1) {
                     matched[u] = true;
                     matched[match] = true;
+                    // Marcar o arco do emparelhamento
+                    d.stepBysStep.colorArc(g.findLine(g.getNode(u), g.getNode(match)), Color.GREEN);
+                    d.stepBysStep.nextStep();
                 }
             }
         }
@@ -47,7 +52,7 @@ public class Edmonds extends Algorithm {
         d.algoFinished();
     }
 
-    private int findAugmentingPath(Graph g, int u, int[] parent, boolean[] matched) {
+    private int findAugmentingPath(Graph g, int u, int[] parent, boolean[] matched, Draw d) {
         int V = g.getNbsommets();
         boolean[] visited = new boolean[V];
         Arrays.fill(visited, false);
@@ -58,6 +63,7 @@ public class Edmonds extends Algorithm {
         }
 
         visited[u] = true;
+
         List<Integer> queue = new ArrayList<>();
         queue.add(u);
 
@@ -68,6 +74,10 @@ public class Edmonds extends Algorithm {
             // Parcours des voisins du sommet courant
             for (int v = 0; v < V; v++) {
                 if (!visited[v] && g.getAdjMatrix()[current][v] == 1) {
+                    visited[v] = true;
+                    d.stepBysStep.colorArc(g.findLine(g.getNode(current), g.getNode(v)), Color.YELLOW);
+                    d.stepBysStep.nextStep();
+
                     if (parent[v] == -1) {
                         parent[v] = current;
                         return v;
@@ -94,3 +104,4 @@ public class Edmonds extends Algorithm {
         return base[u];
     }
 }
+

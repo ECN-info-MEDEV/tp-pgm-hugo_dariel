@@ -1,9 +1,13 @@
 package Inforeg.Algo;
 
 import Inforeg.Draw.Draw;
+import Inforeg.Graph.Graph;
+import Inforeg.ObjetGraph.Arc;
 import Inforeg.ObjetGraph.Node;
-import java.util.LinkedList;
+import java.awt.Color;
+import java.util.Arrays;
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class Dinic extends Algorithm implements AlgorithmST, Processing {
 
@@ -16,114 +20,110 @@ public class Dinic extends Algorithm implements AlgorithmST, Processing {
     public void process(Draw d) {
         d.setStatus(Draw.ALGO_INPUT);
     }
-
+    
     @Override
     public void process(Draw d, Node srcNode, Node destNode) {
-        int src = d.getG().getNodeId(srcNode);
-        int dest = d.getG().getNodeId(destNode);
-        int maxFlow;
+    int src = d.getG().getNodeId(srcNode);
+    int dest = d.getG().getNodeId(destNode);
+    Graph g = d.getG();
+    g.updateVariable();
+    int V = g.getNbsommets();
 
-        FlowGraph graph = new FlowGraph(d.getG().getNbsommets());
-
-        maxFlow = dinicMaxFlow(graph, src, dest);
-
-        if (maxFlow >= 0) {
-            d.setResultat("Flux Maximal: " + maxFlow);
-        } else {
-            d.setResultat("Il n'existe pas un flux valide entre les sommets " +
-                    d.getNodes().get(src).getLabel() + " et " + d.getNodes().get(dest).getLabel() + ".");
+    // Residual graph
+    int[][] rGraph = new int[V][V];
+    for (int u = 0; u < V; u++) {
+        for (int v = 0; v < V; v++) {
+            rGraph[u][v] = g.getAdjMatrix()[u][v];
         }
     }
 
-    // Structure d'une arête dans un réseau de flux.
-    static class Edge {
-        int to, capacity, flow;
-        Edge reverse;
+    // 'level' array to store the level of each node
+    int[] level = new int[V];
 
-        Edge(int to, int capacity) {
-            this.to = to;
-            this.capacity = capacity;
-        }
+    int max_flow = 0;
+
+    // While there is a path from source to sink
+    while (bfsLevelGraph(rGraph, src, dest, level, V)) {
+        // Find blocking flow using DFS or similar method
+        int flow;
+        do {
+            flow = sendFlow(src, Integer.MAX_VALUE, dest, level, rGraph, V);
+            max_flow += flow;
+        } while (flow > 0);
     }
 
-    // Structure de graphe de flux.
-    static class FlowGraph {
-        int V;
-        LinkedList<Edge>[] adj;
+        // Code to update the visualization and result
 
-        FlowGraph(int V) {
-            this.V = V;
-            adj = new LinkedList[V];
-            for (int i = 0; i < V; i++) {
-                adj[i] = new LinkedList<>();
-            }
-        }
-
-        // Ajoute une arête avec capacité au réseau de flux.
-        void addEdge(int u, int v, int capacity) {
-            Edge forward = new Edge(v, capacity);
-            Edge backward = new Edge(u, 0); // Flux initial est zéro
-            forward.reverse = backward;
-            backward.reverse = forward;
-            adj[u].add(forward);
-            adj[v].add(backward);
-        }
-    }
-
-    static final int INF = Integer.MAX_VALUE;
-
-    // Fonction de recherche de chemin BFS (Breadth-First Search).
-    static boolean bfs(FlowGraph graph, int source, int sink, int[] dist) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(source);
-        dist[source] = 0;
-
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
-            for (Edge edge : graph.adj[u]) {
-                if (dist[edge.to] == INF && edge.flow < edge.capacity) {
-                    queue.add(edge.to);
-                    dist[edge.to] = dist[u] + 1;
+    // Update the flow on each edge in the visualization
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (g.getAdjMatrix()[i][j] > 0) { // There is an edge from i to j
+                int flowUsed = g.getAdjMatrix()[i][j] - rGraph[i][j];
+                Arc arc = d.findLine(i, j);
+                if (arc != null) {
+                    arc.setFlow(flowUsed); // Set the flow used in this edge
+                    // Update the color of the edge based on the flow
+                    if (flowUsed > 0) {
+                        arc.setColorDisplayed(Color.GREEN);
+                    } else {
+                        arc.setColorDisplayed(Color.RED);
+                    }
                 }
             }
         }
-
-        return dist[sink] != INF;
     }
 
-    // Fonction pour augmenter le flux le long d'un chemin dans le réseau résiduel.
-    static int dfs(FlowGraph graph, int[] dist, int u, int sink, int minFlow) {
-        if (u == sink) {
-            return minFlow;
-        }
+    // Update the result label with the max flow value
+    String resultText = String.format("Le flot maximal du graphe entre les sommets %s et %s est de %d.",
+                                      d.getNodes().get(src).getLabel(),
+                                      d.getNodes().get(dest).getLabel(),
+                                      max_flow);
+    d.setResultat(resultText);
 
-        for (Edge edge : graph.adj[u]) {
-            if (dist[edge.to] == dist[u] + 1 && edge.flow < edge.capacity) {
-                int flow = dfs(graph, dist, edge.to, sink, Math.min(minFlow, edge.capacity - edge.flow));
-                if (flow > 0) {
-                    edge.flow += flow;
-                    edge.reverse.flow -= flow;
-                    return flow;
-                }
-            }
-        }
+    // Indicate that the algorithm has finished
+    d.algoFinished();
 
-        return 0;
-    }
-
-    // Algorithme de Dinic pour trouver le flux maximal dans le réseau.
-    static int dinicMaxFlow(FlowGraph graph, int source, int sink) {
-        int maxFlow = 0;
-        int[] dist = new int[graph.V];
-
-        while (bfs(graph, source, sink, dist)) {
-            int flow;
-            while ((flow = dfs(graph, dist, source, sink, INF)) > 0) {
-                maxFlow += flow;
-            }
-        }
-
-        return maxFlow;
-    }
 }
 
+// BFS method to construct level graph
+private boolean bfsLevelGraph(int[][] rGraph, int src, int dest, int[] level, int V) {
+    // Initialize level array with -1
+    Arrays.fill(level, -1);
+    level[src] = 0;
+
+    Queue<Integer> q = new LinkedList<>();
+    q.offer(src);
+
+    while (!q.isEmpty()) {
+        int u = q.poll();
+        for (int v = 0; v < V; v++) {
+            if (rGraph[u][v] > 0 && level[v] < 0) {
+                level[v] = level[u] + 1;
+                q.offer(v);
+            }
+        }
+    }
+    return level[dest] >= 0;
+}
+
+// DFS-like method to send flow
+private int sendFlow(int u, int flow, int dest, int[] level, int[][] rGraph, int V) {
+    if (u == dest)
+        return flow;
+
+    for (int v = 0; v < V; v++) {
+        if (rGraph[u][v] > 0 && level[v] == level[u] + 1) {
+            int current_flow = Math.min(flow, rGraph[u][v]);
+            int temp_flow = sendFlow(v, current_flow, dest, level, rGraph, V);
+
+            if (temp_flow > 0) {
+                rGraph[u][v] -= temp_flow;
+                rGraph[v][u] += temp_flow;
+                return temp_flow;
+            }
+        }
+    }
+    return 0;
+}
+
+}
