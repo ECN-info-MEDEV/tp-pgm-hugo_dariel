@@ -638,7 +638,7 @@ public class Interface {
 
     private void updateAlgoSelector() {
         if (d.getAlgo() == null) {
-            algoButton.setText("▼");
+            algoButton.setText("▼ Choisir");
         } else {
             algoButton.setText("▼  " + d.getAlgo().getName());
             autoStart.setVisible(!d.getAlgo().isAutoStart());
