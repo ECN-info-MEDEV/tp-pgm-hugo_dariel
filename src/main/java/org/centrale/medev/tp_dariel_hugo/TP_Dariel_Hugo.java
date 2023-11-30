@@ -24,7 +24,7 @@ public class TP_Dariel_Hugo {
          */
         
         
-      String filePath = "/baboon.pgm";
+      String filePath = "C:\\Users\\hugoc\\OneDrive\\Área de Trabalho\\exercicios\\MEDEV_TP3\\tp-pgm-hugo_dariel\\src\\main\\java\\org\\centrale\\medev\\tp_dariel_hugo\\baboon.pgm";
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -45,7 +45,7 @@ public class TP_Dariel_Hugo {
             }
 
             // Ler largura, altura e valor máximo do pixel
-            String[] dimensions = line.split("\\s");
+            String[] dimensions = line.split("  ");
             width = Integer.parseInt(dimensions[0]);
             height = Integer.parseInt(dimensions[1]);
 
@@ -54,14 +54,28 @@ public class TP_Dariel_Hugo {
             // Ler os pixels da imagem
             int[][] pixels = new int[height][width];
             String[] pixel = new String[width];
+            int[] line_matrix = new int[width];
+            int j=0;
+            
             
             for (int i = 0; i < height; i++) {
-                br.readLine();
-                pixel = line.split("\\s");
-                for (int j = 0; j < width; j++) {
-                    pixels[i][j] = Integer.parseInt(pixel[j]);
+            
+                while(j<width){
+
+
+                    pixel = br.readLine().split("  ");
+                    
+                    for (int k=j;k<j+pixel.length;k++) {
+                        line_matrix[k] = Integer.parseInt(pixel[k-j].trim());
+                    }
+                    
+                    j = j+pixel.length;
+                    
                 }
+
+                    pixels[i] = line_matrix;
             }
+            
 
             br.close();
         } catch (IOException e) {
