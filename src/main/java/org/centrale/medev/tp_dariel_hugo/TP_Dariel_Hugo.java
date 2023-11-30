@@ -4,6 +4,7 @@
 
 package org.centrale.medev.tp_dariel_hugo;
 
+
 /**
  *
  * @author darielbezerra
@@ -11,6 +12,12 @@ package org.centrale.medev.tp_dariel_hugo;
 public class TP_Dariel_Hugo {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        /**
+         * Lecture des images PGM
+         */
+
     }
+    
+
 }
