@@ -24,7 +24,8 @@ public class TP_Dariel_Hugo {
          */
         
         
-      String filePath = "C:\\Users\\hugoc\\OneDrive\\Área de Trabalho\\exercicios\\MEDEV_TP3\\tp-pgm-hugo_dariel\\src\\main\\java\\org\\centrale\\medev\\tp_dariel_hugo\\baboon.pgm";
+        String filePath = "/Users/darielbezerra/Downloads/Informatique pour les Systèmes d'Information/Cours/2eme Periode/Méthodologie de Développement/TP3/TP_Dariel_Hugo/src/main/java/org/centrale/medev/tp_dariel_hugo/baboon.pgm";
+//      String filePath = "C:\\Users\\hugoc\\OneDrive\\Área de Trabalho\\exercicios\\MEDEV_TP3\\tp-pgm-hugo_dariel\\src\\main\\java\\org\\centrale\\medev\\tp_dariel_hugo\\baboon.pgm";
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
@@ -76,11 +77,26 @@ public class TP_Dariel_Hugo {
                     pixels[i] = line_matrix;
             }
             
+            int[] histogram = new int[256];
+
+            for (int[] ligne : pixels){
+                for(int pixelValue : ligne) {
+                    histogram[pixelValue]++;
+                }
+            }
+            
+            for(int i = 0; i < histogram.length; i++){
+                System.out.println(i + ": " + histogram[i]);
+            }
+            
 
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        
+
     }
     
     
