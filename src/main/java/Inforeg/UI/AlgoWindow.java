@@ -47,7 +47,7 @@ public class AlgoWindow extends JDialog {
         AlgoBox tree = new AlgoBox("Arbre", this, treeIco);
         tree.addAlgo(new PrimMST());
         tree.addAlgo(new KruskalMST());
-        tree.addAlgo(new Edmonds());
+        tree.addAlgo(new EdmondsMST());
 
         AlgoBox coloration = new AlgoBox("Coloration", this, colorationIco);
         coloration.addAlgo(new Coloration());
