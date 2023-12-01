@@ -49,8 +49,8 @@ public class ExportLatex {
         Graph G = d.getG();
         
         String res = "\\documentclass{article}\n" +
-                     "\\usepackage{tikz} % Pacote TikZ\n" +
-                     "\\usepackage{graphicx} % Para usar \\resizebox\n" +
+                     "\\usepackage{tikz} \n" +
+                     "\\usepackage{graphicx} \\resizebox\n" +
                      "\\usepackage{xcolor}\n" +
                      "\\resizebox{15cm}{!}{\n\\begin{tikzpicture}[scale=0.05]\n";
         this.arcSize = arcSize;
