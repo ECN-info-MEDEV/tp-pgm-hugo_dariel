@@ -165,6 +165,17 @@ public class Graph {
     public int[][] getAdjMatrix() {
         return adjMatrix;
     }
+    
+    public int getDegree(int vertex) {
+        int degree = 0;
+        for (int i = 0; i < this.getNbsommets(); i++) {
+            if (this.adjMatrix[vertex][i] != 0) {
+                degree++;
+            }
+        }
+        return degree;
+    }
+
 
     public ArrayList<LinkedList<Integer>> getListAdj() {
         return listAdj;

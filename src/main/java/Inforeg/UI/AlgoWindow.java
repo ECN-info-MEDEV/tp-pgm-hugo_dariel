@@ -55,6 +55,8 @@ public class AlgoWindow extends JDialog {
         AlgoBox parcours = new AlgoBox("Parcours", this, scanIco);
         parcours.addAlgo(new DFS());
         parcours.addAlgo(new BFS());
+        parcours.addAlgo(new Centralite());
+        parcours.addAlgo(new eulerien());
 
         JPanel dialPanel = new JPanel();
         dialPanel.setLayout(new GridLayout(3, 2));
