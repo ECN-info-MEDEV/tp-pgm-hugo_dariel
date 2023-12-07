@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject1;
+package dames;
 
 import java.util.ArrayList;
 
@@ -26,6 +26,14 @@ public class Joueur {
         this.nom=nom;
         this.pieces=new ArrayList<Piece>();
         this.pieces=pieces;
+
+    }
+    
+    public Joueur(){
+        this.nom="joueur";
+        this.pieces=new ArrayList<Piece>();
+        for(int i=0;i<12;i++){
+        this.pieces.add(new Piece());}
 
     }
 
