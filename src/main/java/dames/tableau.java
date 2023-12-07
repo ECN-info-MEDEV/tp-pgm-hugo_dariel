@@ -40,7 +40,8 @@ public class tableau {
 
     }
 
-     public void affiche() {
+     public void affiche(Joueur j) {
+         if(j == this.joueur1){
         int numRows = this.grille[0].length;
         int numCols = this.grille.length;
 
@@ -76,6 +77,45 @@ public class tableau {
         for (int col = 0; col < numCols; col++) {
             System.out.printf("%-" + cellSize + "s", col);
         }
+         }
+         else{
+             int numRows = this.grille[0].length;
+        int numCols = this.grille.length;
+
+    int maxNomeLength = 1; 
+
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+                if (this.grille[row][col] != null) {
+                    int nomeLength = this.grille[row][col].toString().length();
+                    maxNomeLength = Math.max(maxNomeLength, nomeLength);
+                }
+            }
+        }
+        int cellSize = maxNomeLength + 2; 
+        for (int row = numRows - 1; row >= 0; row--) {
+            System.out.printf("%-" + maxNomeLength + "d  ", row); 
+            for (int col = 0; col < numCols; col++) {
+                if (this.grille[row][col] == null && (row+col)%2==1) {
+                    System.out.printf("%-" + cellSize + "s", " "); 
+                } 
+                else if(this.grille[row][col] == null && (row+col)%2==0) {
+                    System.out.printf("%-" + cellSize + "s", "0"); 
+                } 
+                else {
+                    String nome = this.grille[row][col].toString();
+                    System.out.printf("%-" + cellSize + "s", nome); 
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+        System.out.printf("%-" + cellSize + "s", "");
+        for (int col = 0; col < numCols; col++) {
+            System.out.printf("%-" + cellSize + "s", col);
+        }
+             
+         }
      }
      
      
