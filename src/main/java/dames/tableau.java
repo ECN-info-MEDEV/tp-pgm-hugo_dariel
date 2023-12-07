@@ -10,16 +10,32 @@ package dames;
  */
 public class tableau {
     
-    private piece[][] grille;
+    private Piece[][] grille;
     
     private Joueur joueur1,joueur2;
     
     public void CreerTableau(){
-        this.grille = new piece[8][8];
-        this.joueur1 = new joueur();
-        this.joueur2 = new joueur();
-        for(int i=0;i<12;i++){
-        this.joueur1.pieces.get(i).setPosition();
+        
+        this.grille = new Piece[8][8];
+        this.joueur1 = new Joueur();
+        this.joueur2 = new Joueur();
+        int pos1 = 0;
+        int pos2 = 0;
+        
+        for(int i=0;i<8;i++){
+            for(int j=0;j<8;j++){
+                if((i+j)%2 == 0 && i<3){
+                    
+                    this.grille[i][j] = this.joueur1.getPieces().get(pos1);
+                    this.joueur1.getPieces().get(pos1).getPos().setPosition(i,j);
+                    pos1++;
+                }
+                else if((i+j)%2 == 0 && i>4){
+                    this.grille[i][j] = this.joueur2.getPieces().get(pos2);
+                    this.joueur2.getPieces().get(pos2).getPos().setPosition(i,j);
+                    pos2++;
+                }
+            }
         }
 
     }
@@ -42,9 +58,13 @@ public class tableau {
         for (int row = numRows - 1; row >= 0; row--) {
             System.out.printf("%-" + maxNomeLength + "d  ", row); 
             for (int col = 0; col < numCols; col++) {
-                if (this.grille[row][col] == null) {
+                if (this.grille[row][col] == null && (row+col)%2==1) {
+                    System.out.printf("%-" + cellSize + "s", " "); 
+                } 
+                else if(this.grille[row][col] == null && (row+col)%2==0) {
                     System.out.printf("%-" + cellSize + "s", "0"); 
-                } else {
+                } 
+                else {
                     String nome = this.grille[row][col].toString();
                     System.out.printf("%-" + cellSize + "s", nome); 
                 }
@@ -57,6 +77,8 @@ public class tableau {
             System.out.printf("%-" + cellSize + "s", col);
         }
      }
+     
+     
     public void turnJeu(Boolean turn){
         if(turn){
             for(Piece p: this.joueur1.getPieces()){
