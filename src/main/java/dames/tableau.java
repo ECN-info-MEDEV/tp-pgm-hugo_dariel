@@ -10,7 +10,7 @@ package dames;
  */
 public class tableau {
     
-    private piece[][] grille;
+    private Piece[][] grille;
     
     private Joueur joueur1,joueur2;
     
@@ -60,15 +60,16 @@ public class tableau {
     public void turnJeu(Boolean turn){
         if(turn){
             for(Piece p: this.joueur1.getPieces()){
-                p.
+                if(p.peutManger(this)){
+                    
+                }
         }
         }
         
     }
-}
-
-
-
-
+    public Piece[][] getGrille(){
+        return this.grille;
+    }
     
 
+}

@@ -16,7 +16,7 @@ public class Piece {
     private Boolean dame;
     private Point2D pos;
     
-    public piece(Boolean dame, Point2D pos){
+    public Piece(Boolean dame, Point2D pos){
         this.dame = dame;
         this.pos = pos;
     }
@@ -34,5 +34,26 @@ public class Piece {
     }
     public void setPos(Point2D p){
         this.pos = p;
+    }
+    public Boolean peutManger(tableau g){
+        Boolean peut;
+        if(this.dame){
+            
+        }
+        else{
+           if(g.getGrille()[this.pos.getX()+1][this.pos.getY()+1]!=null && g.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
+               Boolean EC = true;
+           }
+           if(tableau.getGrille()[this.pos.getX()+1][this.pos.getY()+1]!=null && tableau.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
+               Boolean EC = true;
+           } 
+           if(tableau.getGrille()[this.pos.getX()+1][this.pos.getY()+1]!=null && tableau.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
+               Boolean EC = true;
+           } 
+           if(tableau.getGrille()[this.pos.getX()+1][this.pos.getY()+1]!=null && tableau.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
+               Boolean EC = true;
+           } 
+        }
+        return peut;
     }
 }
