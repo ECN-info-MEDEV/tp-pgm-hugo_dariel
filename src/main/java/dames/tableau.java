@@ -79,18 +79,20 @@ public class tableau {
      }
      
      
+     public void manger(Joueur j, Piece p, Point2D posmanger){
+         j.getPieces().remove(this.grille[posmanger.getX()][posmanger.getY()]);
+         this.grille[posmanger.getX()][posmanger.getY()] = null;
+         deplacer(p,posmanger.getX(),posmanger.getY());
+     }
+     
+     public void deplacer(Piece p, int x, int y){
+         this.grille[p.getPos().getX()][p.getPos().getY()]= null;  
+         this.grille[x][y]=p;         
+     }
+     
     public void turnJeu(Boolean turn){
         if(turn){
             for(Piece p: this.joueur1.getPieces()){
-                p.
+                
         }
         }
-        
-    }
-}
-
-
-
-
-    
-

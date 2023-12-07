@@ -16,9 +16,14 @@ public class Piece {
     private Boolean dame;
     private Point2D pos;
     
-    public piece(Boolean dame, Point2D pos){
+    public Piece(Boolean dame, Point2D pos){
         this.dame = dame;
         this.pos = pos;
+    }
+    
+    public Piece(){
+        this.dame = false;
+        this.pos = new Point2D();
     }
     
     public Boolean estDame(){
