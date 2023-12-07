@@ -57,10 +57,12 @@ public class tableau {
             System.out.printf("%-" + cellSize + "s", col);
         }
      }
-    public void turnJeu(Boolean turn){
+    public void turnJeu(Boolean turn,Joueur j){
         if(turn){
+            Boolean[] peutmanger = new Boolean[j.getnNbPieces()];
+            Arrays.fill(booleanArray, Boolean.FALSE);
             for(Piece p: this.joueur1.getPieces()){
-                if(p.peutManger(this)){
+                if(p.peutManger(this)[0]||p.peutManger(this)[1]||p.peutManger(this)[2]||p.peutManger(this)[3]){
                     
                 }
         }
