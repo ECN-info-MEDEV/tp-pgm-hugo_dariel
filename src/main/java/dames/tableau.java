@@ -117,6 +117,7 @@ public class tableau {
              
          }
      }
+<<<<<<< HEAD
      
      
      public void manger(Joueur j, Piece p, Point2D posmanger){
@@ -131,8 +132,29 @@ public class tableau {
      }
      
     public void turnJeu(Boolean turn){
+=======
+    public void turnJeu(Boolean turn,Joueur j){
+>>>>>>> origin/vitaum
         if(turn){
+            Boolean[] peutmanger = new Boolean[j.getnNbPieces()];
+            Arrays.fill(booleanArray, Boolean.FALSE);
             for(Piece p: this.joueur1.getPieces()){
+<<<<<<< HEAD
                 
         }
         }
+=======
+                if(p.peutManger(this)[0]||p.peutManger(this)[1]||p.peutManger(this)[2]||p.peutManger(this)[3]){
+                    
+                }
+        }
+        }
+        
+    }
+    public Piece[][] getGrille(){
+        return this.grille;
+    }
+    
+
+}
+>>>>>>> origin/vitaum
