@@ -16,7 +16,7 @@ public class Piece {
      * @param args the command line arguments
      */
     private Boolean dame;
-    private Boolean coleur;
+    private Boolean couleur;
     private Point2D pos;
     
     public Piece(){
@@ -28,8 +28,8 @@ public class Piece {
         this.pos = pos;
     }
     
-    public Boolean getColeur(){
-        return this.coleur;
+    public Boolean getCouleur(){
+        return this.couleur;
     }
     
     public Boolean estDame(){
@@ -54,10 +54,10 @@ public class Piece {
         if(this.dame){
             int i = 0;
             while(this.pos.getX()+i<7 && this.pos.getY()+i<7){
-                if(Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()+i].getColeur(), this.getColeur())){
+                if(Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()+i].getCouleur(), this.getCouleur())){
                     i = 10;
                 }
-                if(!Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()+i].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()+i+1][this.pos.getY()+i+1]==null){
+                if(!Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()+i].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()+i+1][this.pos.getY()+i+1]==null){
                     DC = true;
                     i = 10;
                 }
@@ -65,10 +65,10 @@ public class Piece {
             }
             i = 0;
             while(this.pos.getX()-i>0 && this.pos.getY()+i<7){
-                if(Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()+i].getColeur(), this.getColeur())){
+                if(Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()+i].getCouleur(), this.getCouleur())){
                     i = 10;
                 }
-                if(!Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()+i].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()-i-1][this.pos.getY()+i+1]==null){
+                if(!Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()+i].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()-i-1][this.pos.getY()+i+1]==null){
                     EC = true;
                     i = 10;
                 }
@@ -76,10 +76,10 @@ public class Piece {
             } 
             i = 0;
             while(this.pos.getX()+i<7 && this.pos.getY()-i>0){
-                if(Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()-i].getColeur(), this.getColeur())){
+                if(Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()-i].getCouleur(), this.getCouleur())){
                     i = 10;
                 }
-                if(!Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()-i].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()+i+1][this.pos.getY()-i-1]==null){
+                if(!Objects.equals(g.getGrille()[this.pos.getX()+i][this.pos.getY()-i].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()+i+1][this.pos.getY()-i-1]==null){
                     DB = true;
                     i = 10;
                 }
@@ -87,10 +87,10 @@ public class Piece {
             } 
             i = 0;
             while(this.pos.getX()-i>0 && this.pos.getY()-i>0){
-                if(Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()-i].getColeur(), this.getColeur())){
+                if(Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()-i].getCouleur(), this.getCouleur())){
                     i = 10;
                 }
-                if(!Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()-i].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()-i-1][this.pos.getY()-i-1]==null){
+                if(!Objects.equals(g.getGrille()[this.pos.getX()-i][this.pos.getY()-i].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()-i-1][this.pos.getY()-i-1]==null){
                     EB = true;
                     i = 10;
                 }
@@ -98,16 +98,16 @@ public class Piece {
             }
         }
         else{
-           if(this.pos.getX()+2<8 && this.pos.getY()+2<8 && !Objects.equals(g.getGrille()[this.pos.getX()+1][this.pos.getY()+1].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
+           if(this.pos.getX()+2<8 && this.pos.getY()+2<8 && !Objects.equals(g.getGrille()[this.pos.getX()+1][this.pos.getY()+1].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()+2][this.pos.getY()+2]==null){
                DC = true;
            }
-           if(this.pos.getX()-2>=0 && this.pos.getY()+2<8 && !Objects.equals(g.getGrille()[this.pos.getX()-1][this.pos.getY()+1].getColeur(),this.getColeur()) && g.getGrille()[this.pos.getX()-2][this.pos.getY()+2]==null){
+           if(this.pos.getX()-2>=0 && this.pos.getY()+2<8 && !Objects.equals(g.getGrille()[this.pos.getX()-1][this.pos.getY()+1].getCouleur(),this.getCouleur()) && g.getGrille()[this.pos.getX()-2][this.pos.getY()+2]==null){
                EC = true;
            }
-           if(this.pos.getX()+2<8 && this.pos.getY()-2>=0 && !Objects.equals(g.getGrille()[this.pos.getX()+1][this.pos.getY()-1].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()+2][this.pos.getY()-2]==null){
+           if(this.pos.getX()+2<8 && this.pos.getY()-2>=0 && !Objects.equals(g.getGrille()[this.pos.getX()+1][this.pos.getY()-1].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()+2][this.pos.getY()-2]==null){
                DB = true;
            } 
-           if(this.pos.getX()-2>=0 && this.pos.getY()-2>=0 && !Objects.equals(g.getGrille()[this.pos.getX()-1][this.pos.getY()-1].getColeur(), this.getColeur()) && g.getGrille()[this.pos.getX()-2][this.pos.getY()-2]==null){
+           if(this.pos.getX()-2>=0 && this.pos.getY()-2>=0 && !Objects.equals(g.getGrille()[this.pos.getX()-1][this.pos.getY()-1].getCouleur(), this.getCouleur()) && g.getGrille()[this.pos.getX()-2][this.pos.getY()-2]==null){
                EB = true;
            }
         }
