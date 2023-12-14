@@ -127,21 +127,33 @@ public class tableau {
     
     
 
-    public void turnJeu(Boolean turn, Joueur j) {
-        if (turn) {
-            Boolean[] peutmanger = new Boolean[j.getNbPieces()];
-            Arrays.fill(peutmanger, Boolean.FALSE);
-            for (Piece p : this.joueur1.getPieces()) {
-                if (p.peutManger(this)[0] || p.peutManger(this)[1] || p.peutManger(this)[2] || p.peutManger(this)[3]) {
-
+//    public void tourDeJeu(Boolean turn, Joueur j) {
+//        if (turn) {
+//            Boolean[] peutmanger = new Boolean[j.getNbPieces()];
+//            Arrays.fill(peutmanger, Boolean.FALSE);
+//            for (Piece p : this.joueur1.getPieces()) {
+//                if (p.peutManger(this)[0] || p.peutManger(this)[1] || p.peutManger(this)[2] || p.peutManger(this)[3]) {
+//                }
+//            }
+//        }
+//
+//    }
+    
+    
+    public void tourDeJeu() {
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                if(grille[i][j] != null){
+                    
                 }
             }
         }
-
     }
+    
 
     public Piece[][] getGrille() {
         return this.grille;
     }
 
 }
+
