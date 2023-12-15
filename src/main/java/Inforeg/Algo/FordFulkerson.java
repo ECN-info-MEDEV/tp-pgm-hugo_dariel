@@ -121,6 +121,9 @@ public class FordFulkerson extends Algorithm implements AlgorithmST, Processing 
                 path_flow
                         = Math.min(path_flow, rGraph[u][v]);
             }
+            String matrizFluxoStr = matriceFluxToString(rGraph, g);
+            d.stepBysStep.setInfoText(matrizFluxoStr);
+
             d.stepBysStep.nextStep();
             // update residual capacities of the edges and
             // reverse edges along the path
@@ -152,5 +155,38 @@ public class FordFulkerson extends Algorithm implements AlgorithmST, Processing 
         d.setResultat("Le flot maximal du graphe entre les sommets " + d.getNodes().get(src).getLabel() + " et " + d.getNodes().get(dest).getLabel() + " est de " + max_flow + ".");
         d.algoFinished();
     }
+    
+    private String matriceFluxToString(int[][] rGraph, Graph g) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html><pre>Matrice de Flux:<br>");
+        int V = g.getNbsommets();
+
+        // Cabeçalho para colunas
+        sb.append("    "); // Espaço para os rótulos da linha
+        for (int j = 0; j < V; j++) {
+            sb.append(String.format("%4s", g.getNodes().get(j).getLabel()));
+        }
+        sb.append("<br>");
+
+        // Linhas da matriz
+        for (int i = 0; i < V; i++) {
+            // Rótulo para a linha
+            sb.append(String.format("%4s", g.getNodes().get(i).getLabel()));
+
+            // Células da matriz
+            for (int j = 0; j < V; j++) {
+                if (i == j) {
+                    sb.append(String.format("%4s", "-")); // Traço para a diagonal principal
+                } else {
+                    sb.append(String.format("%4d", rGraph[i][j]));
+                }
+            }
+            sb.append("<br>");
+        }
+        sb.append("</pre></html>");
+        return sb.toString();
+    }
+
+
 
 }

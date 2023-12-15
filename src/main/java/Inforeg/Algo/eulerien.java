@@ -11,7 +11,7 @@ public class eulerien extends Algorithm implements Processing {
 
     public eulerien() {
         super();
-        this.setName("Parcours Eulerien");
+        this.setName("Eulerien");
     }
     
     
@@ -19,32 +19,42 @@ public class eulerien extends Algorithm implements Processing {
     public void process(Draw d) {
         Graph g = d.getG();
         g.updateVariable();
-
         if (!estEulerien(g)) {
             d.setResultat("Le graphe n'est pas eulérien.");
             return;
         }
-
+        
+        int[] graus = new int[g.getNbsommets()];
+        for (int i = 0; i < g.getNbsommets(); i++) {
+            graus[i] = g.getDegree(i);
+        }
         Stack<Integer> chemin = new Stack<>();
         Stack<Node> noeudsChemin = new Stack<>();
 
         int src = trouverNoeudDeDepart(g);
         chemin.push(src);
+        noeudsChemin.push(d.getNode(src));
+        d.stepBysStep.colorNode(d.getNode(src), Color.ORANGE, false);
 
         while (!chemin.isEmpty()) {
             int u = chemin.peek();
 
-            if (g.getDegree(u) > 0) {
+            if (graus[u] > 0) {
                 int v = trouverProchainNoeud(g, u);
                 Arc arc = d.findLine(u, v);
                 if (arc != null) {
                     arc.setColorDisplayed(Color.RED);
+                    d.stepBysStep.setInfoText("Chemin de "+u+" a "+v);
+                    g.getAdjMatrix()[u][v]--;
+                    g.getAdjMatrix()[v][u]--;
+                    graus[u]--;
+                    graus[v]--;
                 }
 
                 chemin.push(v);
                 noeudsChemin.push(d.getNode(v));
                 d.stepBysStep.colorNode(d.getNode(v), Color.ORANGE, false);
-                d.stepBysStep.setInfoText("Exploration du nœud " + d.getNode(v).getLabel());
+                
                 d.stepBysStep.nextStep();
             } else {
                 chemin.pop();
@@ -56,11 +66,14 @@ public class eulerien extends Algorithm implements Processing {
                 }
             }
         }
-
-        d.setResultat("Parcours Eulerien terminé.");
-        d.repaint();
+        
+        d.stepBysStep.setInfoText("Parcours Eulerien trouvé.");
+        d.stepBysStep.nextStep();
         d.algoFinished();
+        d.setResultat("Parcours Eulerien trouvé.");
+        
     }
+
 
     private boolean estEulerien(Graph g) {
         int sommetsImpairs = 0;
